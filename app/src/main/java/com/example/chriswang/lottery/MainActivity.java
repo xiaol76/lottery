@@ -18,10 +18,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.chriswang.lottery.meta.WinnerInfo;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ParticipantAdapter mAdapter;
     private TextView mStart;
+    private ArrayList<WinnerInfo> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,19 @@ public class MainActivity extends AppCompatActivity {
         transparentStatusBar(true);
         mRecyclerView = (RecyclerView) findViewById(R.id.participantList);
         mStart = (TextView) findViewById(R.id.start);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 4));
+        GridLayoutManager manager = new GridLayoutManager(MainActivity.this, 4);
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (mList.get(position).getType() == WinnerInfo.HEADER) {
+                    return 4;
+                } else {
+                    return 1;
+                }
+            }
+        });
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setHasFixedSize(true);
         mAdapter = new ParticipantAdapter();
         mRecyclerView.setAdapter(mAdapter);
         final PopupMenu popupMenu = new PopupMenu(MainActivity.this, mStart);
@@ -58,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (LotteryManager.getInstance().getParticipantList().size() == 0) {
+            mList = LotteryManager.getInstance().getWinnerList();
+            mStart.setVisibility(View.GONE);
+        } else {
+            mList = LotteryManager.getInstance().getParticipantList();
+        }
         mAdapter.notifyDataSetChanged();
     }
 
@@ -65,18 +86,31 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new WinnerHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_winner, parent, false));
+            if (viewType == WinnerInfo.HEADER) {
+                return new WinnerHeader(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header, parent, false));
+            } else {
+                return new WinnerHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_winner, parent, false));
+            }
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            WinnerInfo winner = LotteryManager.getInstance().getWinnerList().get(position);
-            ((WinnerHolder) holder).render(winner);
+            WinnerInfo winner = mList.get(position);
+            if (winner.getType() == WinnerInfo.HEADER) {
+                ((WinnerHeader) holder).render(winner);
+            } else {
+                ((WinnerHolder) holder).render(winner);
+            }
         }
 
         @Override
         public int getItemCount() {
-            return LotteryManager.getInstance().getWinnerList().size();
+            return mList.size();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return mList.get(position).getType();
         }
     }
 
@@ -98,6 +132,19 @@ public class MainActivity extends AppCompatActivity {
 //            Glide.with(MainActivity.this).load(winnerInfo.getAvatar()).apply(RequestOptions.circleCropTransform()).into(avatar);
             Glide.with(MainActivity.this).load(winnerInfo.getAvatar()).into(avatar);
             nickname.setText(winnerInfo.getName());
+        }
+    }
+
+    private class WinnerHeader extends RecyclerView.ViewHolder {
+        private TextView title;
+
+        public WinnerHeader(View itemView) {
+            super(itemView);
+            title = itemView.findViewById(R.id.title);
+        }
+
+        public void render(WinnerInfo winnerInfo) {
+            title.setText(winnerInfo.getTitle());
         }
     }
 

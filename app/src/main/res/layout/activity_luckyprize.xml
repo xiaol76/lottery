@@ -22,8 +22,8 @@
         android:layout_marginTop="20dp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
-        android:textColor="@color/theme_color_Primary"
-        android:textSize="15sp" />
+        android:textColor="@color/yellow"
+        android:textSize="18sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/winnerList"

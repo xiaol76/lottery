@@ -50,6 +50,7 @@ public class LuckyPrizeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_luckyprize);
         transparentStatusBar(true);
         mLevel = getLevel(getIntent().getStringExtra(PRIZE_LEVEL));
+        LotteryManager.getInstance().getWinnerList().add(new WinnerInfo(getIntent().getStringExtra(PRIZE_LEVEL)));
         mLuckyImage = (ImageView) findViewById(R.id.luckyWinenr);
         mLevelText = (TextView) findViewById(R.id.level);
         mLevelText.setText(getIntent().getStringExtra(PRIZE_LEVEL));
@@ -65,6 +66,7 @@ public class LuckyPrizeActivity extends AppCompatActivity {
                     isStarted = false;
                     mHandler.removeCallbacksAndMessages(null);
                     WinnerInfo winnerInfo = LotteryManager.getInstance().getWinner(mLevel);
+                    LotteryManager.getInstance().getWinnerList().add(winnerInfo);
                     mCount++;
                     mList.add(winnerInfo);
                     mAdapter.notifyDataSetChanged();
@@ -72,7 +74,6 @@ public class LuckyPrizeActivity extends AppCompatActivity {
                     if (mLevel == mCount) {
                         mStart.setText(R.string.other);
                         isReturned = true;
-                        return;
                     } else {
                         mStart.setText(R.string.start);
                     }
@@ -108,7 +109,7 @@ public class LuckyPrizeActivity extends AppCompatActivity {
     }
 
     private void showRandomWinner() {
-        final List<WinnerInfo> winnerInfoList = LotteryManager.getInstance().getWinnerList();
+        final List<WinnerInfo> winnerInfoList = LotteryManager.getInstance().getParticipantList();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

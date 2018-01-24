@@ -10,6 +10,7 @@ import java.util.Random;
  */
 
 public class LotteryManager {
+    private ArrayList<WinnerInfo> mParticipantList = new ArrayList<>();
     private ArrayList<WinnerInfo> mWinnerList = new ArrayList<>();
 
     private static LotteryManager sInstance;
@@ -26,34 +27,38 @@ public class LotteryManager {
     }
 
     private void init() {
-        mWinnerList.add(new WinnerInfo(R.drawable.img268, "卞萍"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img269, "小七"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img270, "加喜"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img271, "怡宏"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img272, "王萍"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img273, "安竖"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img274, "周洵"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img275, "静静"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img276, "如轩"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img277, "嘉欣"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img278, "刘强"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img279, "慧丹"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img280, "房钦"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img281, "小乔"));
-        mWinnerList.add(new WinnerInfo(R.drawable.img282, "程行健"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img268, "卞萍"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img269, "小七"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img270, "加喜"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img271, "怡宏"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img272, "王萍"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img273, "安竖"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img274, "周洵"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img275, "静静"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img276, "如轩"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img277, "嘉欣"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img278, "刘强"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img279, "慧丹"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img280, "房钦"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img281, "小乔"));
+        mParticipantList.add(new WinnerInfo(R.drawable.img282, "程行健"));
     }
 
     public WinnerInfo getWinner(int level) {
         ArrayList<WinnerInfo> firstWinnerList = new ArrayList<>();
-        for (WinnerInfo winner : mWinnerList) {
+        for (WinnerInfo winner : mParticipantList) {
             if (isInBlackList(winner) && (level == 1 || level == 2 || level == 3)) {
                 continue;
             }
             firstWinnerList.add(winner);
         }
         WinnerInfo firstWinner = firstWinnerList.get(new Random().nextInt(firstWinnerList.size()));
-        mWinnerList.remove(firstWinner);
+        mParticipantList.remove(firstWinner);
         return firstWinner;
+    }
+
+    public ArrayList<WinnerInfo> getParticipantList() {
+        return mParticipantList;
     }
 
     public ArrayList<WinnerInfo> getWinnerList() {
