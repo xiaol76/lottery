@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">年会抽奖</string>
+    <string name="start">开始抽奖</string>
+    <string name="enter">进入抽奖</string>
+    <string name="stop">结束</string>
+    <string name="first">一等奖</string>
+    <string name="second">二等奖</string>
+    <string name="third">三等奖</string>
+    <string name="forth">四等奖</string>
+    <string name="fifth">五等奖</string>
+    <string name="error">抽奖已经结束</string>
+    <string name="other">继续抽奖</string>
+</resources>

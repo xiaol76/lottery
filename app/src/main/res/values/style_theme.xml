@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="Base.AppTheme" parent="Theme.AppCompat.Light">
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">@color/theme_color_Primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">@color/theme_color_PrimaryDark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/theme_color_PrimaryAccent</item>
+
+        <!--<item name="colorControlActivated">@color/greenColor</item>-->
+        <!--colorControlNormal: The color applied to framework controls in their normal state.-->
+        <!--colorControlActivated: The color applied to framework controls in their activated (ex. checked, switch on) state.-->
+        <!--colorControlHighlight: The color applied to framework control highlights (ex. ripples, list selectors).-->
+        <!--colorButtonNormal: The color applied to framework buttons in their normal state.-->
+        <!--colorSwitchThumbNormal: The color applied to framework switch thumbs in their normal state. (switch off)-->
+        <!-- Active thumb color & Active track color(30% transparency) -->
+        <!--<item name="colorControlActivated">@color/theme</item>-->
+        <!-- Inactive thumb color -->
+        <!--<item name="colorSwitchThumbNormal">@color/grey300</item>-->
+        <!-- Inactive track color(30% transparency) -->
+        <!--<item name="android:colorForeground">@color/grey600</item>-->
+        <item name="actionBarSize">@dimen/toolbarHeight</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:disabledAlpha">0.5</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fadingEdgeLength">0dp</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+</resources>
